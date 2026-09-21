@@ -1,158 +1,531 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhishek | Chess-profile</title>
-    <link rel="stylesheet" href="port.css">
-    <link rel="icon" type="image/x-icon" href="https://media.istockphoto.com/id/1704345194/vector/chess-horse-logo.jpg?s=612x612&w=0&k=20&c=thziz7NgMLhME8XnQJlqi9b6pSxmHQV0CLmBNHKJ0ro=">
+    <title>Abhishek Kumar | Premium Chess & Dev Portfolio</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        gold: {
+                            DEFAULT: '#D4AF37',
+                            light: '#F3E5AB',
+                            dark: '#AA8C2C'
+                        },
+                        dark: {
+                            900: '#050505',
+                            800: '#111111',
+                            700: '#1A1A1A'
+                        }
+                    },
+                    boxShadow: {
+                        'gold-glow': '0 0 20px rgba(212, 175, 55, 0.15)',
+                        'gold-glow-lg': '0 0 30px rgba(212, 175, 55, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Animated Chessboard Background */
+        .bg-pattern {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(45deg, rgba(20,20,20,0.4) 25%, transparent 25%, transparent 75%, rgba(20,20,20,0.4) 75%, rgba(20,20,20,0.4)), 
+                linear-gradient(45deg, rgba(20,20,20,0.4) 25%, transparent 25%, transparent 75%, rgba(20,20,20,0.4) 75%, rgba(20,20,20,0.4));
+            background-size: 80px 80px;
+            background-position: 0 0, 40px 40px;
+            z-index: -1;
+            animation: slowPan 150s linear infinite;
+        }
+
+        @keyframes slowPan {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(80px, 80px); }
+        }
+
+        /* Premium Glassmorphism */
+        .glass-nav {
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-panel {
+            background: linear-gradient(145deg, rgba(26,26,26,0.9) 0%, rgba(17,17,17,0.9) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        /* 3D Tilt Wrapper */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out; /* Super fast transition for fluid follow */
+        }
+        
+        .tilt-content {
+            transform: translateZ(30px); /* Pushes content out during tilt */
+        }
+
+        /* Scroll Reveals */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Typing Effect Cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+            color: #D4AF37;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Form Inputs */
+        .input-premium {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .input-premium:focus {
+            outline: none;
+            border-color: rgba(212, 175, 55, 0.5);
+            background: rgba(255,255,255,0.05);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+    </style>
 </head>
-<body>
-    <nav>
-        <div>
-            <img src="360_F_1180030893_NjV12ylHC4WdTYFUiwpz0p5L8CcnTXUl.png" alt="Logo">
+<body class="antialiased selection:bg-gold selection:text-black">
+
+    <div class="bg-pattern"></div>
+
+    <nav class="fixed w-full z-50 transition-all duration-300 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="#home" class="font-serif text-2xl font-bold text-white flex items-center gap-3 group">
+                    <i class="fa-solid fa-chess-knight text-gold group-hover:rotate-12 transition-transform duration-300"></i> 
+                    <span class="tracking-widest">AK.</span>
+                </a>
+                <div class="hidden md:flex space-x-10">
+                    <a href="#home" class="text-xs uppercase tracking-[0.2em] text-gray-400 hover:text-gold transition-colors font-medium">Home</a>
+                    <a href="#winnings" class="text-xs uppercase tracking-[0.2em] text-gray-400 hover:text-gold transition-colors font-medium">Winnings</a>
+                    <a href="#ratings" class="text-xs uppercase tracking-[0.2em] text-gray-400 hover:text-gold transition-colors font-medium">Ratings</a>
+                    <a href="#contact" class="text-xs uppercase tracking-[0.2em] text-gray-400 hover:text-gold transition-colors font-medium">Contact</a>
+                </div>
+            </div>
         </div>
-        <div class="menu-toggle">☰</div>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#winnings">Winnings</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#profiles">Profiles</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
     </nav>
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <br><br><br><br>
-            <p></p>
-            <h1>Hello, I'm  <span>Abhishek</span></h1>
-            <p>
-                I am Abhishek currently pursuing my education in srm ktr chennai in B.tech in Computer science specialisation in software engineering and I am passionate about playing chess , I am a nation level chess player but currently I am inactive in chess for my other goals.<br>
-                 I have won many tournaments and also represented my state and school in national level tournaments.
-            </p>
-            <a href="#winnings" class="btn">Achievements</a>
-        </div>
-        <div class="hero-image">
-            <img src="profile.jpeg" alt="abhishek">
-        </div>
-    </section>
-    <br><br>
-    <section id="winnings">
-        <h1>WINNINGS</h1>
-        <div class="winnings-grid">
-            <div class="winnings-card">
-                <img src="WhatsApp Image 2026-09-21 at 04.58.52.jpeg" alt="DAV CLUSTER 2025">
-                <h3>DAV CLUSTER 2025</h3>
-                <p>Played for the school team  In 2025 , secured 1st place</p>
-            </div>
-            <div class="winnings-card">
-                <img src="WhatsApp Image 2026-09-21 at 04.58.51.jpeg" alt="DAV STATE 2025">
-                <h3>DAV STATE 2025 </h3>
-                <p>Played for the district team in 2025, secured 1st place</p>
-            </div>
-            <div class="winnings-card">
-                <img src="" alt="wait pls">
-                <h3>WILL BE UPLOADED SOON.. ⏳</h3>
-            </div>
-            <div class="winnings-card">
-                <img src="" alt="wait pls">
-                <h3>WILL BE UPLOADED SOON.. ⏳</h3>
-            </div>
 
-        </div>
-    </section>
-
-    <section id="skills">
-        <h1>My RATINGS</h1>
-        <h2>Chess.com</h2>
-        <div class="skills-grid">
-            <div class="skill-item">
-                <div class="skill-header"><span>RAPID</span><span>1637</span></div>
-                <div class="skill-bar"><div class="skill-progress" style="width: 65.48%;"></div></div>
+    <header id="home" class="min-h-screen flex items-center justify-center relative px-4 pt-20">
+        <div class="text-center max-w-4xl mx-auto z-10 reveal">
+            <div class="mb-6 inline-block">
+                <span class="px-4 py-1.5 rounded-full border border-gold/30 bg-gold/5 text-gold text-xs font-medium tracking-[0.2em] uppercase">
+                    Portfolio 2026
+                </span>
             </div>
-            <div class="skill-item">
-                <div class="skill-header"><span>BULLET</span><span>1747</span></div>
-                <div class="skill-bar"><div class="skill-progress" style="width: 69.88%;"></div></div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-header"><span>BLITZ</span><span>1621</span></div>
-                <div class="skill-bar"><div class="skill-progress" style="width: 64.84%;"></div></div>
-            </div>
-            <div class="skill-item">
-                <div class="skill-header"><span>DAILY</span><span>1600</span></div>
-                <div class="skill-bar"><div class="skill-progress" style="width: 64%;"></div></div>
+            <h1 class="text-5xl md:text-7xl font-serif font-bold text-white mb-6 leading-tight">
+                Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold via-gold-light to-gold">Abhishek Kumar</span>
+            </h1>
+            <div class="h-8 md:h-10 mb-10">
+                <p class="text-xl md:text-3xl text-gray-400 font-light typing-cursor" id="typing-text"></p>
             </div>
             
-        </div>
-        <br>
-        <h2>Lichess.org</h2>
-        <div class="skills-grid2">
-            <div class="skill-item2">
-                <div class="skill-header2"><span>RAPID</span><span>1777</span></div>
-                <div class="skill-bar2"><div class="skill-progress" style="width: 71.08%;"></div></div>
-            </div>
-            <div class="skill-item2">
-                <div class="skill-header2"><span>BULLET</span><span>1677</span></div>
-                <div class="skill-bar2"><div class="skill-progress" style="width: 67.08%;"></div></div>
-            </div>
-            <div class="skill-item2">
-                <div class="skill-header2"><span>BLITZ</span><span>1758</span></div>
-                <div class="skill-bar2"><div class="skill-progress" style="width: 70.32%;"></div></div>
-            </div>
-            <div class="skill-item2">
-                <div class="skill-header2"><span>DAILY</span><span>1600</span></div>
-                <div class="skill-bar2"><div class="skill-progress" style="width: 64%;"></div></div>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mt-8">
+                <a href="#ratings" class="group relative px-8 py-4 bg-gold text-black font-semibold rounded-sm overflow-hidden transition-all hover:shadow-gold-glow-lg">
+                    <span class="relative z-10 flex items-center gap-2">View My Ratings <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i></span>
+                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+                </a>
+                <a href="#contact" class="px-8 py-4 text-white font-semibold rounded-sm border border-white/20 hover:border-gold hover:text-gold transition-all">
+                    Contact Me
+                </a>
             </div>
         </div>
-    </section>
-    <section id="profiles">
-        <h1>My Profiles</h1>
-        <div class="profiles-grid">
-            <div class="profile-card">
-                <h3>CHESS.COM</h3>
-                <p>Come and challenge me on chess.com!</p>
-                <a href="https://link.chess.com/friend/SokaOb" target="_blank">Challenge →</a>
-            </div>
-            <div class="profile-card">
-                <h3>LICHESS.ORG</h3>
-                <p>Come and challenge me on lichess.org!</p>
-                <a href="https://lichess.org/@/abhishekk360" target="_blank">Challenge →</a>
-            </div>
-            <div class="profile-card">
-                <h3>INSTAGRAM</h3>
-                <p>Follow and talk to me here </p>
-                <a href="https://www.instagram.com/moonlight45736/" target="_blank">lets talk →</a>
-            </div>
-            <div class="profile-card">
-                <h3>Discord</h3>
-                <p>Follow me and talk to me here</p>
-                <a href="https://discord.gg/5naZPcZx" target="_blank">lets talk →</a>
-            </div>
+        
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity cursor-pointer">
+            <span class="text-[10px] uppercase tracking-[0.3em] text-gold">Scroll</span>
+            <div class="w-[1px] h-12 bg-gradient-to-b from-gold to-transparent animate-pulse"></div>
         </div>
-    </section>
-    <section id="contact">
-        <h1>Contact Me</h1>
-        <div class="contact-container">
-            <div><img src="profile.jpeg" alt="Abhishek "></div>
-            <div class="contact-info">
-                <h2> Abhishek</h2>
-                <h3>Chennai - 600 013</h3>
-                <h3>+91 7986952421</h3>
-                <h3>abhishek632308@gmail.com</h3>
+    </header>
+
+    <section id="winnings" class="py-32 px-6 relative z-10 bg-dark-900/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 reveal flex flex-col items-center">
+                <h2 class="text-sm text-gold tracking-[0.3em] uppercase mb-2">Gallery</h2>
+                <h3 class="text-4xl md:text-5xl font-serif font-bold text-white">Moments of <span class="text-gold opacity-90 italic">Triumph</span></h3>
+                <div class="w-12 h-[1px] bg-gold mt-6"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Image 1 -->
+                <div class="reveal tilt-card group cursor-pointer perspective-1000">
+                    <div class="glass-panel rounded-xl overflow-hidden shadow-2xl group-hover:border-gold/30 transition-colors duration-500 p-2">
+                        <div class="relative overflow-hidden rounded-lg aspect-[4/3] tilt-content">
+                            <img src="WhatsApp Image 2026-09-21 at 04.58.51.jpeg" alt="Tournament Excellence" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" onerror="this.src='https://placehold.co/800x600/111/D4AF37?text=Tournament+Victory'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
+                            <div class="absolute bottom-0 left-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <h4 class="text-2xl font-serif font-bold text-white mb-2 shadow-black">Tournament Excellence</h4>
+                                <p class="text-gray-300 text-sm">Strategic victories and relentless dedication.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 2 -->
+                <div class="reveal tilt-card group cursor-pointer perspective-1000" style="transition-delay: 150ms;">
+                    <div class="glass-panel rounded-xl overflow-hidden shadow-2xl group-hover:border-gold/30 transition-colors duration-500 p-2">
+                        <div class="relative overflow-hidden rounded-lg aspect-[4/3] tilt-content">
+                            <img src="WhatsApp Image 2026-09-21 at 04.58.52.jpeg" alt="Cluster Level Champion" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" onerror="this.src='https://placehold.co/800x600/111/D4AF37?text=Cluster+Champion'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
+                            <div class="absolute bottom-0 left-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                <h4 class="text-2xl font-serif font-bold text-white mb-2 shadow-black">Cluster Level Champion</h4>
+                                <p class="text-gray-300 text-sm">Honors received alongside fellow teammates.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-    <br><br><br><br><br>
-    <footer>
-        <div>
-            <h3>@Abhishek 2026. All Rights Reserved.</h3>
-            <div class="social-links">
-                <a href="https://www.instagram.com/moonlight45736/" target="_blank">Instagram</a>
-                <a href="https://discord.gg/5naZPcZx" target="_blank">Discord</a>
-                <a href="https://link.chess.com/friend/SokaOb" target="_blank">chess.com</a>
+
+    <section id="ratings" class="py-32 px-6 relative z-10 border-y border-white/5 bg-gradient-to-b from-dark-900 to-dark-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 reveal flex flex-col items-center">
+                <h2 class="text-sm text-gold tracking-[0.3em] uppercase mb-2">Statistics</h2>
+                <h3 class="text-4xl md:text-5xl font-serif font-bold text-white">Live <span class="text-gold opacity-90 italic">Ratings</span></h3>
+                <div class="w-12 h-[1px] bg-gold mt-6"></div>
             </div>
-            <h3>Designed & Developed by Abhishek.</h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                
+                <!-- Chess.com -->
+                <div class="reveal glass-panel p-10 rounded-2xl relative overflow-hidden group hover:border-green-500/30">
+                    <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+                        <i class="fa-solid fa-chess-pawn text-8xl text-green-500"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-2">
+                            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                                <i class="fa-solid fa-chess-pawn text-green-500"></i>
+                            </div>
+                            <h3 class="text-3xl font-serif font-bold text-white">Chess.com</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-10 font-mono">ID: messyy360</p>
+                        
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-dark-900/50 p-6 rounded-xl border border-white/5">
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Rapid</p>
+                                <p class="text-4xl font-bold text-white count-up" data-target="1780">0</p>
+                            </div>
+                            <div class="bg-dark-900/50 p-6 rounded-xl border border-white/5">
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Bullet</p>
+                                <p class="text-4xl font-bold text-white count-up" data-target="1809">0</p>
+                            </div>
+                            <div class="bg-dark-900/50 p-6 rounded-xl border border-white/5">
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Blitz</p>
+                                <p class="text-4xl font-bold text-white count-up" data-target="1753">0</p>
+                            </div>
+                            <div class="bg-dark-900/50 p-6 rounded-xl border border-white/5">
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Daily</p>
+                                <p class="text-4xl font-bold text-white count-up" data-target="1600">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lichess -->
+                <div class="reveal glass-panel p-10 rounded-2xl relative overflow-hidden group hover:border-white/30" style="transition-delay: 150ms;">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
+                        <i class="fa-solid fa-chess-knight text-8xl text-white"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-2">
+                            <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                                <i class="fa-solid fa-chess-knight text-white"></i>
+                            </div>
+                            <h3 class="text-3xl font-serif font-bold text-white">Lichess</h3>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-10 font-mono">ID: abhishekk360</p>
+                        
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-dark-900/50 p-6 rounded-xl border border-white/5">
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Rapid</p>
+                                <p class="text-4xl font-bold text-white count-up" data-target="1900">0</p>
+                            </div>
+                            <div class="bg-dark-900/50 p-6 rounded-xl border border-white/5">
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Bullet</p>
+                                <p class="text-4xl font-bold text-white count-up" data-target="1876">0</p>
+                            </div>
+                            <div class="bg-dark-900/50 p-6 rounded-xl border border-white/5">
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Blitz</p>
+                                <p class="text-4xl font-bold text-white count-up" data-target="1798">0</p>
+                            </div>
+                            <div class="bg-dark-900/50 p-6 rounded-xl border border-white/5">
+                                <p class="text-xs text-gray-500 uppercase tracking-widest mb-1">Daily</p>
+                                <p class="text-4xl font-bold text-white count-up" data-target="1600">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-32 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 reveal flex flex-col items-center">
+                <h2 class="text-sm text-gold tracking-[0.3em] uppercase mb-2">Connect</h2>
+                <h3 class="text-4xl md:text-5xl font-serif font-bold text-white">Let's <span class="text-gold opacity-90 italic">Talk</span></h3>
+                <div class="w-12 h-[1px] bg-gold mt-6"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
+                <!-- Social Links -->
+                <div class="lg:col-span-2 space-y-4">
+                    <a href="mailto:bird52436@gmail.com" class="reveal tilt-card block">
+                        <div class="glass-panel p-6 rounded-xl flex items-center gap-6 hover:border-gold/40 tilt-content">
+                            <div class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                                <i class="fa-solid fa-envelope text-xl text-gray-300"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold mb-1">Email</h4>
+                                <p class="text-gray-400 text-sm">bird52436@gmail.com</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://instagram.com/moonlight45736" target="_blank" class="reveal tilt-card block" style="transition-delay: 100ms;">
+                        <div class="glass-panel p-6 rounded-xl flex items-center gap-6 hover:border-pink-500/40 tilt-content">
+                            <div class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                                <i class="fa-brands fa-instagram text-xl text-gray-300"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold mb-1">Instagram</h4>
+                                <p class="text-gray-400 text-sm">@moonlight45736</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="reveal tilt-card block" style="transition-delay: 200ms;">
+                        <div class="glass-panel p-6 rounded-xl flex items-center gap-6 hover:border-indigo-500/40 tilt-content">
+                            <div class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
+                                <i class="fa-brands fa-discord text-xl text-gray-300"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold mb-1">Discord</h4>
+                                <p class="text-gray-400 text-sm">@moonlight45736</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:col-span-3 reveal" style="transition-delay: 300ms;">
+                    <div class="glass-panel p-10 rounded-2xl h-full">
+                        <h4 class="text-2xl font-serif text-white mb-6">Send a Message</h4>
+                        <form onsubmit="event.preventDefault();" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-400 uppercase tracking-wider">Name</label>
+                                    <input type="text" class="w-full input-premium rounded-lg px-4 py-3 text-white placeholder-gray-600" placeholder="John Doe">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-xs text-gray-400 uppercase tracking-wider">Email</label>
+                                    <input type="email" class="w-full input-premium rounded-lg px-4 py-3 text-white placeholder-gray-600" placeholder="john@example.com">
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs text-gray-400 uppercase tracking-wider">Message</label>
+                                <textarea rows="4" class="w-full input-premium rounded-lg px-4 py-3 text-white placeholder-gray-600 resize-none" placeholder="Challenge me to a game or discuss tech..."></textarea>
+                            </div>
+                            <button class="w-full bg-white text-black font-semibold py-4 rounded-lg hover:bg-gold transition-colors duration-300 shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-gold-glow">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark-900 py-10 border-t border-white/5 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="text-gray-500 text-sm flex items-center gap-2">
+                <i class="fa-solid fa-chess text-gold"></i>
+                &copy; 2026 Abhishek Kumar.
+            </div>
+            <div class="text-gray-600 text-sm tracking-widest uppercase">
+                Software Engineer & Chess Player
+            </div>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // 1. Typing Effect Logic
+            const typingElement = document.getElementById('typing-text');
+            const phrases = [
+                "1st-year BTech CSE Student.",
+                "Software Engineering Specialization.",
+                "Competitive Chess Player."
+            ];
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function typeEffect() {
+                const currentPhrase = phrases[phraseIndex];
+                
+                if (isDeleting) {
+                    typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                let typingSpeed = isDeleting ? 50 : 100;
+
+                if (!isDeleting && charIndex === currentPhrase.length) {
+                    typingSpeed = 2000; // Pause at end of phrase
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    typingSpeed = 500; // Pause before new phrase
+                }
+
+                setTimeout(typeEffect, typingSpeed);
+            }
+            // Start typing effect slightly after load
+            setTimeout(typeEffect, 1000);
+
+            // 2. Scroll Reveal & Count-Up using Intersection Observer
+            const reveals = document.querySelectorAll('.reveal');
+            const counters = document.querySelectorAll('.count-up');
+
+            const observerOptions = {
+                threshold: 0.2,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const scrollObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        
+                        // Handle count-ups inside revealed elements
+                        const childCounters = entry.target.querySelectorAll('.count-up');
+                        childCounters.forEach(counter => {
+                            if (!counter.classList.contains('counted')) {
+                                counter.classList.add('counted');
+                                animateCountUp(counter);
+                            }
+                        });
+                        
+                        // Stop observing once animated
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            reveals.forEach(el => scrollObserver.observe(el));
+
+            // Count Up Function
+            function animateCountUp(element) {
+                const target = +element.getAttribute('data-target');
+                const duration = 2000; // 2 seconds
+                const frameDuration = 1000 / 60; // 60fps
+                const totalFrames = Math.round(duration / frameDuration);
+                let frame = 0;
+
+                // Easing function (easeOutExpo)
+                const easeOut = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+
+                const counter = setInterval(() => {
+                    frame++;
+                    const progress = easeOut(frame / totalFrames);
+                    const currentCount = Math.round(target * progress);
+
+                    element.textContent = currentCount;
+
+                    if (frame === totalFrames) {
+                        element.textContent = target;
+                        clearInterval(counter);
+                    }
+                }, frameDuration);
+            }
+
+            // 3. 3D Tilt Effect (Vanilla JS)
+            const tiltCards = document.querySelectorAll('.tilt-card');
+            
+            tiltCards.forEach(card => {
+                const inner = card.querySelector('.glass-panel');
+                
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left; 
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    // Limit rotation to max 8 degrees for subtlety
+                    const rotateX = ((y - centerY) / centerY) * -8;
+                    const rotateY = ((x - centerX) / centerX) * 8;
+                    
+                    inner.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    inner.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                    // Add smooth return
+                    inner.style.transition = 'transform 0.5s ease-out';
+                    setTimeout(() => {
+                        inner.style.transition = 'border-color 0.4s ease, box-shadow 0.4s ease'; // reset to default transitions
+                    }, 500);
+                });
+                
+                card.addEventListener('mouseenter', () => {
+                    inner.style.transition = 'transform 0.1s ease-out'; // fast tracking on enter
+                });
+            });
+        });
+    </script>
 </body>
 </html>
